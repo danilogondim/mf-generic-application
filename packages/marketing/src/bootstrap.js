@@ -9,7 +9,9 @@ const mount = (el, { onNavigate }) => {
   const history = createMemoryHistory();
 
   // the history has a built-in functionality, an event listener called listen. Every time a navigation occurs and the memory history is updated, the history object will call the function we are providing on the listen key
-  history.listen(onNavigate);
+  if (onNavigate) {
+    history.listen(onNavigate);
+  };
 
   ReactDOM.render(<App history={history} />, el);
 };
@@ -19,7 +21,7 @@ if (process.env.NODE_ENV === 'development') {
   const devRoot = document.querySelector('#_marketing-dev-root');
 
   if (devRoot) {
-    mount(devRoot);
+    mount(devRoot, {});
   }
 }
 
