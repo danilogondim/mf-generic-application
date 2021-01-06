@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createMemoryHistory } from 'history';
+import { createMemoryHistory, createBrowserHistory } from 'history';
 import App from './App';
 
 // Mount function to start up the app
-const mount = (el, { onNavigate }) => {
-  // this object will let us use memory history instead of the browser history that is only used in the container
-  const history = createMemoryHistory();
+const mount = (el, { onNavigate, defaultHistory }) => {
+  // the createMemoryHistory will return an object that will let us use memory history instead of the browser history that is only used in the container or if we are in development mode (we are passing the dafaultHistory only in development. If there is no defaultHistory, then we are going to use the createMemoryHistory function)
+  const history = defaultHistory || createMemoryHistory();
 
   // the history has a built-in functionality, an event listener called listen. Every time a navigation occurs and the memory history is updated, the history object will call the function we are providing on the listen key
   if (onNavigate) {
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'development') {
   const devRoot = document.querySelector('#_marketing-dev-root');
 
   if (devRoot) {
-    mount(devRoot, {});
+    mount(devRoot, { defaultHistory: createBrowserHistory() });
   }
 }
 
