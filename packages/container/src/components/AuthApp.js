@@ -21,6 +21,10 @@ export default () => {
           history.push(nextPathname);
         }
       },
+      // pass a callback to 'notify' container about sign in events
+      onSignIn: () => {
+        console.log("User signed in");
+      }
     });
 
     history.listen(onParentNavigate);
