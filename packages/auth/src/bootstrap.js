@@ -4,9 +4,12 @@ import { createMemoryHistory, createBrowserHistory } from 'history';
 import App from './App';
 
 // Mount function to start up the app
-const mount = (el, { onNavigate, defaultHistory }) => {
+const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
   // the createMemoryHistory will return an object that will let us use memory history instead of the browser history that is only used in the container or if we are in development mode (we are passing the dafaultHistory only in development. If there is no defaultHistory, then we are going to use the createMemoryHistory function)
-  const history = defaultHistory || createMemoryHistory();
+  const history = defaultHistory || createMemoryHistory({
+    // this is how we set an initial path different from / (the correct path will come from the container when mounting)
+    initialEntries: [initialPath],
+  });
 
   // the history has a built-in functionality, an event listener called listen. Every time a navigation occurs and the memory history is updated, the history object will call the function we are providing on the listen key
   if (onNavigate) {
