@@ -2,7 +2,7 @@ import { mount } from 'auth/AuthApp';
 import React, { useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-export default () => {
+export default ({ onSignIn }) => {
   const ref = useRef(null);
   // this history object is the copy of the Browser history, not the memory history (used only in the microfrontends)
   const history = useHistory();
@@ -21,10 +21,8 @@ export default () => {
           history.push(nextPathname);
         }
       },
-      // pass a callback to 'notify' container about sign in events
-      onSignIn: () => {
-        console.log("User signed in");
-      }
+      // pass a callback to 'notify' container about sign in events (this fc comes from the props passed in App.js)
+      onSignIn,
     });
 
     history.listen(onParentNavigate);
